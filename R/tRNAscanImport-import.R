@@ -50,7 +50,7 @@ NULL
 #' @importFrom Biostrings DNAStringSet
 #' @importFrom Structstrings DotBracketStringSet
 #' @importFrom BiocGenerics start
-#' @importFrom GenomeInfoDb seqnames
+#' @importFrom Seqinfo seqnames
 #' @importFrom S4Vectors mcols
 #' @importFrom stringr str_trim str_locate_all
 #' @importFrom rtracklayer export.gff3
@@ -94,7 +94,7 @@ import.tRNAscanAsGRanges <-
   S4Vectors::mcols(gr)$tRNA_length <- 
     nchar(as.character(S4Vectors::mcols(gr)$tRNA_seq))
   # sort GRanges object
-  gr <- gr[order(GenomeInfoDb::seqnames(gr), BiocGenerics::start(gr))]
+  gr <- gr[order(Seqinfo::seqnames(gr), BiocGenerics::start(gr))]
   # convert to gff3 compatible GRanges object
   if(as.GFF3){
     gr <- tRNAscan2GFF(gr)
@@ -347,7 +347,7 @@ tRNAscanID <- function(input){
   .check_trnascan_granges(input, TRNASCAN_FEATURES)
   tRNAscan <- input
   # create ids based on type, anticodon and chromosome
-  chrom <- as.character(GenomeInfoDb::seqnames(tRNAscan))
+  chrom <- as.character(Seqinfo::seqnames(tRNAscan))
   chromIndex <- unlist(lapply(seq_along(unique(chrom)), 
                               function(i){
                                 rep(i,length(which(chrom == unique(chrom)[i])))
